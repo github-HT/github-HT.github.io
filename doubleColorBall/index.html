@@ -23,10 +23,10 @@
             </div>
             <div class="field">
                 <template v-for="(item,i) in doubleColorBall">
-                    <div :key="'doubleColorBall' + i" class="control is-flex is-justify-content-center has-text-white">
+                    <div :key="'doubleColorBall' + i"
+                        class="control is-flex is-justify-content-center has-text-white  is-flex-wrap-wrap">
                         <template v-for="(it,k) in item">
-                            <figure
-                                :key="'doubleColorBallItem'+k"
+                            <figure :key="'doubleColorBallItem'+k"
                                 class="image is-48x48 is-rounded is-flex is-justify-content-center is-align-items-center m-1"
                                 :class="{'has-background-danger-dark': k != item.length - 1,'has-background-link-dark': k == item.length - 1}">
                                 {{it}}
@@ -40,6 +40,27 @@
                     <button class="button is-link" @click="getDoubleColorBall">随机取号</button>
                 </div>
             </div>
+            <div class="field">
+                <div class="control">
+                    <h2>双色球数字汇总</h2>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control is-flex is-justify-content-center has-text-white is-flex-wrap-wrap">
+                    <template v-for="(it,k) in ballNumberCollectForRed">
+                        <figure :key="'ballNumberCollectForRedItem'+k"
+                            class="image is-48x48 is-rounded is-flex is-justify-content-center is-align-items-center m-1 has-background-danger-dark">
+                            {{it}}
+                        </figure>
+                    </template>
+                    <template v-for="(it,k) in ballNumberCollectForBlue">
+                        <figure :key="'ballNumberCollectForBlue'+k"
+                            class="image is-48x48 is-rounded is-flex is-justify-content-center is-align-items-center m-1 has-background-link-dark">
+                            {{it}}
+                        </figure>
+                    </template>
+                </div>
+            </div>
         </div>
     </section>
     <script>
@@ -47,12 +68,80 @@
             el: "#app",
             data() {
                 return {
-                    doubleColorBall: []
+                    // 已生成的双色球组
+                    doubleColorBall: [],
+                    // 双色球数字汇总
+                    ballNumberCollectForRed: [],
+                    ballNumberCollectForBlue: [],
+                    arr: [],
                 }
             },
             methods: {
                 getDoubleColorBall() {
                     this.doubleColorBall.push(getDoubleColorBall());
+                    this.ballNumberCollect();
+                },
+                ballNumberCollect() {
+                    const NumberCollectForRed = [];
+                    const NumberCollectForBlue = [];
+                    for (const item of this.doubleColorBall) {
+                        for (const it of item) {
+                            const index = item.lastIndexOf(it);
+                            if (index < item.length - 1) {
+                                if (NumberCollectForRed.indexOf(it) == -1) {
+                                    NumberCollectForRed.push(it)
+                                }
+                            } else {
+                                if (NumberCollectForBlue.indexOf(it) == -1) {
+                                    NumberCollectForBlue.push(it)
+                                }
+                            }
+                        }
+                    }
+                    this.ballNumberCollectForRed = NumberCollectForRed.sort((a,b) => a-b);
+                    this.ballNumberCollectForBlue = NumberCollectForBlue.sort((a,b) => a-b);
+                    // this.collectfilter(NumberCollectForRed, NumberCollectForBlue);
+                },
+                // n个数字组成m个的组合
+                collectfilter(redArray, blueArray) {
+                    console.time('collectfilter')
+                    let n = 0;
+                    const collect = [];
+                    for (const item1 of redArray) {
+                        for (const item2 of redArray) {
+                            for (const item3 of redArray) {
+                                for (const item4 of redArray) {
+                                    for (const item5 of redArray) {
+                                        for (const item6 of redArray) {
+                                            const arr = [item1, item2, item3, item4, item5, item6]
+                                            if(!this.isRepead(arr)){
+                                                n++;
+                                                console.time('join'+n)
+                                                const str = arr.sort((a,b) => a-b).join('-');
+                                                console.timeEnd('join'+n)
+                                                if(collect.indexOf(str) == -1){
+                                                    collect.push(str);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    console.timeEnd('collectfilter')
+                    console.log(collect);
+                    
+                },
+                // 判断是否有重复
+                isRepead(array){
+                    for (let i = 0; i < array.length; i++) {
+                        const e = array[i];
+                        if(array.lastIndexOf(e) !== i){
+                            return true;
+                        }
+                    }
+                    return false;
                 }
             }
         })

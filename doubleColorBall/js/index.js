@@ -58,7 +58,7 @@ function getAllRedBall (){
  */
 function getDoubleColorBall() {
     // 取6个红球
-    const doubleColorBall = getAllRedBall();
+    const doubleColorBall = getAllRedBall().sort((a,b) => a-b);
     // 取1个蓝球
     doubleColorBall.push(getBlueBall());
     return doubleColorBall;
