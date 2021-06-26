@@ -40,12 +40,12 @@
                     <button class="button is-link" @click="getDoubleColorBall">随机取号</button>
                 </div>
             </div>
-            <div class="field">
+            <div class="field is-hidden">
                 <div class="control">
                     <h2>双色球数字汇总</h2>
                 </div>
             </div>
-            <div class="field">
+            <div class="field is-hidden">
                 <div class="control is-flex is-justify-content-center has-text-white is-flex-wrap-wrap">
                     <template v-for="(it,k) in ballNumberCollectForRed">
                         <figure :key="'ballNumberCollectForRedItem'+k"
