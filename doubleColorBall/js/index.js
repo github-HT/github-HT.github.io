@@ -63,3 +63,54 @@ function getDoubleColorBall() {
     doubleColorBall.push(getBlueBall());
     return doubleColorBall;
 }
+
+
+new Vue({
+    el: "#app",
+    data() {
+        return {
+            // 已生成的双色球组
+            doubleColorBall: [],
+            // 双色球数字汇总
+            ballNumberCollectForRed: [],
+            ballNumberCollectForBlue: [],
+            arr: [],
+        }
+    },
+    methods: {
+        getDoubleColorBall() {
+            this.doubleColorBall.push(getDoubleColorBall());
+            this.ballNumberCollect();
+        },
+        ballNumberCollect() {
+            const NumberCollectForRed = [];
+            const NumberCollectForBlue = [];
+            for (const item of this.doubleColorBall) {
+                for (const it of item) {
+                    const index = item.lastIndexOf(it);
+                    if (index < item.length - 1) {
+                        if (NumberCollectForRed.indexOf(it) == -1) {
+                            NumberCollectForRed.push(it)
+                        }
+                    } else {
+                        if (NumberCollectForBlue.indexOf(it) == -1) {
+                            NumberCollectForBlue.push(it)
+                        }
+                    }
+                }
+            }
+            this.ballNumberCollectForRed = NumberCollectForRed.sort((a,b) => a-b);
+            this.ballNumberCollectForBlue = NumberCollectForBlue.sort((a,b) => a-b);
+        },
+        // 判断数组是否有重复
+        isRepead(array){
+            for (let i = 0; i < array.length; i++) {
+                const e = array[i];
+                if(array.lastIndexOf(e) !== i){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+})
