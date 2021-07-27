@@ -31,7 +31,8 @@
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=76fc44e4bfc3fb5317c4b475ff562ab0"></script>
     <script type="text/javascript">
         var map = new AMap.Map('container', {
-            resizeEnable: true
+            resizeEnable: true,
+            mapStyle: 'amap://styles/grey', //设置地图的显示样式
         });
         AMap.plugin('AMap.Geolocation', function () {
             var geolocation = new AMap.Geolocation({
