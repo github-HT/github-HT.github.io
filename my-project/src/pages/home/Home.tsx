@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import {HomeStateType} from '../../store/reducers/homeReducer'
 
 interface Props {
   
@@ -20,7 +21,7 @@ export class Home extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: HomeStateType) => ({
   
 })
 

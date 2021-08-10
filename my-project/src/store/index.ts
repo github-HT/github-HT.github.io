@@ -1,7 +1,7 @@
 import {combineReducers, createStore} from 'redux';
-import StylesReducer from './reducers/homeReducer';
+import {homeReducer} from './reducers/homeReducer';
 const reducers = combineReducers({
-  home: StylesReducer,
+  home: homeReducer,
 });
 const store = createStore(reducers);
 export default store;

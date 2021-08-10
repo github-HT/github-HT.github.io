@@ -1,8 +1,8 @@
 
-interface HomeStateType {
+export interface HomeStateType {
   
 }
-interface actionType {
+export interface actionType {
   
 }
 const HomeState: HomeStateType = {
