@@ -1,4 +1,5 @@
 @import url('../node_modules//antd/dist/antd.dark.css');
+@import url('./assets/iconfont/iconfont.css');
 .App {
   text-align: center;
 }
@@ -31,3 +32,27 @@
     transform: rotate(360deg);
   }
 }
+
+
+.text-beyond-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis !important;
+}
+
+/* flex start */
+.is-flex{
+  display: flex;
+}
+
+.spacer {
+  flex-grow: 1 !important;
+}
+
+.align-items-center {
+  align-items: center;
+}
+.justify-content-center {
+  justify-content: center;
+}
+/* flex end */
