@@ -10,7 +10,6 @@ export default class CustomHeader extends Component {
     }
 
     render() {
-        console.log('header render');
         return (
             <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }} className="is-flex align-items-center">
                 <div className="logo" />

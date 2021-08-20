@@ -33,7 +33,6 @@ export class Home extends Component {
   render() {
     const { Meta } = Card
     const { activityList } = this.props;
-    console.log('home render');
     return (
       <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
         {activityList.map((item, i) => {
