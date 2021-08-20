@@ -20,10 +20,10 @@ export class Home extends Component {
   async getActivitys() {
     const { dispatch } = this.props
     const params = await getActivityList();
-    // dispatch({
-    //   type: 'SET_ACTIVITY_LIST',
-    //   activityList: params.data.data,
-    // })
+    dispatch({
+      type: 'SET_ACTIVITY_LIST',
+      activityList: params.data.data,
+    })
   }
 
   linkTo(url) {
