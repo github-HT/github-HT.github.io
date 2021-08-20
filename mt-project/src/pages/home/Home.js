@@ -1,59 +1,76 @@
-import React from 'react'
+
+import { Button, Card, Col, Row, Tooltip } from 'antd'
+import { getActivityList } from '../../api/api'
+
+
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Card, Col, Row } from 'antd'
-import mapImg from '../../assets/imgs/mapImg.png'
 
-const CardList = [{
-  title: "地图",
-  subTitle: "就是一个地图页面！",
-  imgUrl: mapImg,
-  url: "https://github-ht.github.io/map/"
-},
-{
-  title: "双色球随机取号",
-  subTitle: "就是随机取号，没有其他的！",
-  imgUrl: "https://github-ht.github.io/doubleColorBall/image/dounleColorBall.jpeg",
-  url: "https://github-ht.github.io/doubleColorBall/"
-}]
+export class Home extends Component {
+  static propTypes = {
+    activityList: PropTypes.array,
+    dispatch: PropTypes.func
+  }
 
-function linkTo(url) {
-  // window.open(url);
-  location.href = url;
-}
+  constructor(props){
+    super(props)
+    this.getActivitys();
+  }
 
-export const Home = ({ link }) => {
-  const { Meta } = Card;
-  return (
-    <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
-      {CardList.map((item, i) => {
-        return (
-          <Col key={'CardList' + i}>
-            <Card
-              onClick={e => linkTo(item.url)}
-              hoverable
-              style={{ width: 240 }}
-              cover={<img alt="example" src={item.imgUrl} />}
-            >
-              <Meta title={item.title} description={item.subTitle} />
-            </Card>
-          </Col>
-        )
-      })}
-    </Row>
-  )
-}
+  async getActivitys() {
+    const {dispatch} = this.props
+    const params = await getActivityList();
+    dispatch({
+      type: 'SET_ACTIVITY_LIST',
+      activityList: params.data.data,
+    })
+  }
 
-Home.propTypes = {
-  link: PropTypes.string
+  linkTo(url) {
+    location.href = url;
+  }
+
+  render() {
+    const {Meta}  = Card
+    const { activityList } = this.props;
+    console.log('home render');
+    return (
+      <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
+        {activityList.map((item, i) => {
+          return (
+            <Col key={'CardList' + i}>
+              <Card
+                onClick={e => this.linkTo(item.url)}
+                hoverable
+                style={{ width: 240 }}
+                cover={<img alt="" style={{height: 240, height: 240}} src={item.img_url} />}
+              >
+                <Meta 
+                  title={(<div className="text-beyond-hidden">{item.title}</div>)} 
+                  description={(
+                    <Tooltip title={item.subtitle} placement="bottom" >
+                      <div className="text-beyond-hidden">{item.subtitle}</div>
+                    </Tooltip>
+                  )} 
+                />
+              </Card>
+            </Col>
+          )
+        })}
+      </Row>
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({
-  link: state.Home.link
+  activityList: state.Home.activityList
 })
 
 const mapDispatchToProps = {
-
+  getActivityList
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps)(Home)
+
+
