@@ -5,17 +5,16 @@ import { Router, Route } from 'react-router';
 import Home from './pages/home/Home';
 import { createBrowserHistory } from 'history';
 import { Layout, Menu, Breadcrumb } from 'antd';
+import CustomHeader from './pages/layout/CustomHeader';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 function App() {
   const history = createBrowserHistory()
   return (
 
     <Layout>
-      {/* <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-        <div className="logo" />
-      </Header> */}
+      <CustomHeader/>
       <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
         <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
           <Router history={history}>
