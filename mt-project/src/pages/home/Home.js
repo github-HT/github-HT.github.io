@@ -1,5 +1,5 @@
 
-import { Button, Card, Col, Row, Tooltip } from 'antd'
+import { Card, Col, Row, Tooltip, Skeleton, Space } from 'antd'
 import { getActivityList } from '../../api/api'
 
 
@@ -13,18 +13,17 @@ export class Home extends Component {
     dispatch: PropTypes.func
   }
 
-  constructor(props){
-    super(props)
+  componentDidMount() {
     this.getActivitys();
   }
 
   async getActivitys() {
-    const {dispatch} = this.props
+    const { dispatch } = this.props
     const params = await getActivityList();
-    dispatch({
-      type: 'SET_ACTIVITY_LIST',
-      activityList: params.data.data,
-    })
+    // dispatch({
+    //   type: 'SET_ACTIVITY_LIST',
+    //   activityList: params.data.data,
+    // })
   }
 
   linkTo(url) {
@@ -32,7 +31,7 @@ export class Home extends Component {
   }
 
   render() {
-    const {Meta}  = Card
+    const { Meta } = Card
     const { activityList } = this.props;
     console.log('home render');
     return (
@@ -44,20 +43,30 @@ export class Home extends Component {
                 onClick={e => this.linkTo(item.url)}
                 hoverable
                 style={{ width: 240 }}
-                cover={<img alt="" style={{height: 240, height: 240}} src={item.img_url} />}
+                cover={<img alt="" style={{ height: 240, height: 240 }} src={item.img_url} />}
               >
-                <Meta 
-                  title={(<div className="text-beyond-hidden">{item.title}</div>)} 
+                <Meta
+                  title={(<div className="text-beyond-hidden">{item.title}</div>)}
                   description={(
                     <Tooltip title={item.subtitle} placement="bottom" >
                       <div className="text-beyond-hidden">{item.subtitle}</div>
                     </Tooltip>
-                  )} 
+                  )}
                 />
               </Card>
             </Col>
           )
         })}
+        {activityList.length === 0 ? (
+          <Col >
+            <Card
+              style={{ width: 240 }}
+              cover={<Skeleton.Image style={{ width: 240, height: 240 }} />}
+            >
+              <Skeleton paragraph={{ rows: 1 }} />
+            </Card>
+          </Col>
+        ) : ""}
       </Row>
     )
   }
